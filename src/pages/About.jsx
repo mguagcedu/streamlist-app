@@ -1,0 +1,1 @@
+export default function About(){return(<section className="card"><h1>About</h1></section>)}
