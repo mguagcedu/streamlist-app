@@ -1,12 +1,13 @@
 import { useState } from "react";
+import { FaTrash, FaEdit, FaSave, FaCheck } from "react-icons/fa";
 
 export default function ItemRow({ item, onToggle, onUpdate, onRemove }) {
   const [edit, setEdit] = useState(false);
   const [draft, setDraft] = useState(item.text);
 
   const save = () => {
-    const t = draft.trim();
-    if (t && t !== item.text) onUpdate(item.id, t);
+    const trimmed = draft.trim();
+    if (trimmed && trimmed !== item.text) onUpdate(item.id, trimmed);
     setEdit(false);
   };
 
@@ -18,7 +19,7 @@ export default function ItemRow({ item, onToggle, onUpdate, onRemove }) {
         onClick={() => onToggle(item.id)}
         title="Toggle complete"
       >
-        ✓
+        <FaCheck aria-hidden="true" />
       </button>
 
       {edit ? (
@@ -35,7 +36,7 @@ export default function ItemRow({ item, onToggle, onUpdate, onRemove }) {
 
       {edit ? (
         <button className="icon-btn" aria-label="Save" onClick={save}>
-          Save
+          <FaSave aria-hidden="true" />
         </button>
       ) : (
         <button
@@ -43,7 +44,7 @@ export default function ItemRow({ item, onToggle, onUpdate, onRemove }) {
           aria-label="Edit"
           onClick={() => setEdit(true)}
         >
-          Edit
+          <FaEdit aria-hidden="true" />
         </button>
       )}
 
@@ -52,7 +53,7 @@ export default function ItemRow({ item, onToggle, onUpdate, onRemove }) {
         aria-label="Delete"
         onClick={() => onRemove(item.id)}
       >
-        Delete
+        <FaTrash aria-hidden="true" />
       </button>
     </li>
   );

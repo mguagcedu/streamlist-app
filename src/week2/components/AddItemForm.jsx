@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaPlus } from "react-icons/fa";
 
 export default function AddItemForm({ onAdd }) {
   const [text, setText] = useState("");
@@ -17,7 +18,9 @@ export default function AddItemForm({ onAdd }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <button type="submit">Add</button>
+      <button type="submit">
+        <FaPlus aria-hidden="true" /> Add
+      </button>
     </form>
   );
 }

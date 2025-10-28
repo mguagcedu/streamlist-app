@@ -7,7 +7,13 @@ export default function Completed({ items, toggleDone, updateText, removeItem })
       <ul className="list">
         {items.length === 0 ? <p>Nothing completed yet</p> : null}
         {items.map((it) => (
-          <ItemRow key={it.id} item={it} onToggle={toggleDone} onUpdate={updateText} onRemove={removeItem} />
+          <ItemRow
+            key={it.id}
+            item={it}
+            onToggle={toggleDone}
+            onUpdate={updateText}
+            onRemove={removeItem}
+          />
         ))}
       </ul>
     </>
