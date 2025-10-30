@@ -5,7 +5,6 @@ import Movies from './pages/Movies.jsx'
 import Cart from './pages/Cart.jsx'
 import About from './pages/About.jsx'
 
-// color selector options
 const THEMES = [
   { value: 'theme-default', label: 'Default' },
   { value: 'theme-contrast', label: 'High Contrast' },
@@ -31,14 +30,7 @@ export default function App() {
             <img
               src="/EZ.png"
               alt="EZTechMovie Logo"
-              style={{
-                height: '42px',
-                width: 'auto',
-                borderRadius: '8px',
-                objectFit: 'contain',
-                backgroundColor: 'transparent',
-                boxShadow: '0 4px 14px rgba(78,160,255,.4)'
-              }}
+              style={{ height: '42px', width: 'auto', borderRadius: '8px', objectFit: 'contain', backgroundColor: 'transparent', boxShadow: '0 4px 14px rgba(78,160,255,.4)' }}
             />
             <span>StreamList</span>
           </div>
@@ -47,20 +39,11 @@ export default function App() {
             <NavLink to="/movies" className={({ isActive }) => (isActive ? 'active' : '')}>Movies</NavLink>
             <NavLink to="/cart" className={({ isActive }) => (isActive ? 'active' : '')}>Cart</NavLink>
             <NavLink to="/about" className={({ isActive }) => (isActive ? 'active' : '')}>About</NavLink>
-
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 8 }}>
               <span className="material-icons" style={{ fontSize: 18 }} aria-hidden>palette</span>
               <label className="sr-only" htmlFor="theme-select">Theme</label>
-              <select
-                id="theme-select"
-                className="input"
-                style={{ width: 160, padding: '6px 8px' }}
-                value={theme}
-                onChange={e => setTheme(e.target.value)}
-              >
-                {THEMES.map(t => (
-                  <option key={t.value} value={t.value}>{t.label}</option>
-                ))}
+              <select id="theme-select" className="input" style={{ width: 160, padding: '6px 8px' }} value={theme} onChange={e => setTheme(e.target.value)}>
+                {THEMES.map(t => (<option key={t.value} value={t.value}>{t.label}</option>))}
               </select>
             </div>
           </div>

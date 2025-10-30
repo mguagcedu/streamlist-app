@@ -89,45 +89,25 @@ export default function StreamList() {
         <form
           onSubmit={handleSubmit}
           className="row gap"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            marginBottom: '12px',
-          }}
+          style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}
         >
           <input
             aria-label="Add item"
             placeholder="Add a movie or task"
             value={input}
             onChange={e => setInput(e.target.value)}
-            style={{
-              flexGrow: 1,
-              padding: '10px 12px',
-              borderRadius: '10px',
-              border: '1px solid #223242',
-              background: '#0a1219',
-              color: 'var(--text)',
-            }}
+            style={{ flexGrow: 1, padding: '10px 12px', borderRadius: '10px', border: '1px solid #223242', background: '#0a1219', color: 'var(--text)' }}
           />
           <button type="submit" className="btn primary" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
             <span className="material-icons">add_circle</span> Add
           </button>
-          <button
-            type="button"
-            className="btn"
-            onClick={clearAll}
-            title="Clear all"
-            style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
-          >
+          <button type="button" className="btn" onClick={clearAll} title="Clear all" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
             <span className="material-icons">restart_alt</span> Clear
           </button>
         </form>
 
         <div className="stats" style={{ marginBottom: '10px' }}>
-          <strong>Total:</strong> {items.length}{' '}
-          <strong>Completed:</strong> {completedCount}{' '}
-          <strong>Open:</strong> {items.length - completedCount}
+          <strong>Total:</strong> {items.length} <strong>Completed:</strong> {completedCount} <strong>Open:</strong> {items.length - completedCount}
         </div>
 
         <ul className="list">
@@ -139,41 +119,22 @@ export default function StreamList() {
                     value={editingText}
                     onChange={e => setEditingText(e.target.value)}
                     className="grow"
-                    style={{
-                      flexGrow: 1,
-                      padding: '8px 10px',
-                      borderRadius: '8px',
-                      border: '1px solid #223242',
-                      background: '#0a1219',
-                      color: 'var(--text)',
-                    }}
+                    style={{ flexGrow: 1, padding: '8px 10px', borderRadius: '8px', border: '1px solid #223242', background: '#0a1219', color: 'var(--text)' }}
                   />
                   <div className="row gap">
-                    <button className="btn" onClick={saveEdit} title="Save">
-                      <span className="material-icons">save</span>
-                    </button>
-                    <button className="btn" onClick={cancelEdit} title="Cancel">
-                      <span className="material-icons">close</span>
-                    </button>
+                    <button className="btn" onClick={saveEdit} title="Save"><span className="material-icons">save</span></button>
+                    <button className="btn" onClick={cancelEdit} title="Cancel"><span className="material-icons">close</span></button>
                   </div>
                 </>
               ) : (
                 <>
                   <label className="row gap grow">
-                    <input
-                      type="checkbox"
-                      checked={item.completed}
-                      onChange={() => handleToggle(item.id)}
-                    />
+                    <input type="checkbox" checked={item.completed} onChange={() => handleToggle(item.id)} />
                     <span>{item.text}</span>
                   </label>
                   <div className="row gap">
-                    <button className="btn" onClick={() => startEdit(item.id)}>
-                      <span className="material-icons">edit</span>
-                    </button>
-                    <button className="btn danger" onClick={() => handleDelete(item.id)}>
-                      <span className="material-icons">delete</span>
-                    </button>
+                    <button className="btn" onClick={() => startEdit(item.id)}><span className="material-icons">edit</span></button>
+                    <button className="btn danger" onClick={() => handleDelete(item.id)}><span className="material-icons">delete</span></button>
                   </div>
                 </>
               )}
@@ -187,11 +148,7 @@ export default function StreamList() {
         <div className="row between" style={{ alignItems: 'center' }}>
           <h2>User Events</h2>
           <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px' }}>
-            <input
-              type="checkbox"
-              checked={showEvents}
-              onChange={() => setShowEvents(!showEvents)}
-            />
+            <input type="checkbox" checked={showEvents} onChange={() => setShowEvents(!showEvents)} />
             {showEvents ? 'Hide' : 'Show'}
           </label>
         </div>
@@ -200,9 +157,7 @@ export default function StreamList() {
           <ul className="list small">
             {events.map((e, idx) => (
               <li key={idx} className="row between">
-                <span>
-                  <strong>{e.type}</strong> — {e.detail}
-                </span>
+                <span><strong>{e.type}</strong> — {e.detail}</span>
                 <time className="muted">{new Date(e.ts).toLocaleString()}</time>
               </li>
             ))}
