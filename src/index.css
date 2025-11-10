@@ -1,0 +1,6 @@
+:root { --bg: #f6f7f9; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: #111827; }
+a { color: #0f62fe; }
+button { cursor: pointer; border: 1px solid #e5e7eb; background: #fff; padding: 6px 10px; border-radius: 6px; }
+select, input, textarea { border: 1px solid #e5e7eb; border-radius: 6px; }

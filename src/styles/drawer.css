@@ -1,0 +1,15 @@
+.sl-overlay{position:fixed;inset:0;background:#0008;opacity:0;pointer-events:none;transition:.2s;}
+.sl-overlay.show{opacity:1;pointer-events:auto;}
+.sl-drawer{position:fixed;top:0;right:-420px;width:360px;max-width:90vw;height:100dvh;background:var(--bg);color:var(--fg);
+  box-shadow:-12px 0 24px #0003;display:flex;flex-direction:column;transition:right .25s;}
+.sl-drawer.show{right:0}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
+.drawer-body{padding:12px 16px;gap:12px;display:flex;flex-direction:column;overflow:auto}
+.drawer-item .row{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.drawer-item .qty{display:flex;align-items:center;gap:6px}
+.drawer-item .qty button{min-width:26px}
+.drawer-item .title{font-weight:600;margin-bottom:4px}
+.drawer-foot{margin-top:auto;border-top:1px solid var(--line);padding:12px 16px;display:flex;gap:10px;align-items:center;justify-content:space-between}
+.btn-primary{background:var(--fg);color:var(--bg);padding:8px 12px;border-radius:8px;text-decoration:none}
+.link{background:none;border:none;color:var(--fg);text-decoration:underline;cursor:pointer}
+.empty{opacity:.6}

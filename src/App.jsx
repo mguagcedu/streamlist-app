@@ -1,71 +1,64 @@
-import React, { useEffect, useMemo, useState, useCallback } from 'react'
-import { AppProvider, useApp } from './context/AppContext.jsx'
-import Header from './components/Header.jsx'
-import MovieList from './components/MovieList.jsx'
-import Events from './components/Events.jsx'
-import { searchMovies } from './services/tmdb.js'
-import { loadState, saveState, logEvent } from './utils/localStorage.js'
+import React, { useState } from "react";
+import { Link, Routes, Route, Navigate } from "react-router-dom";
+import { useApp } from "./state/AppContext.jsx";
+import StreamList from "./pages/StreamList.jsx";
+import Favorites from "./pages/Favorites.jsx";
+import Plans from "./pages/Plans.jsx";
+import Account from "./pages/Account.jsx";
+import CartDropdown from "./components/CartDropdown.jsx";
+import "./styles/ui.css";
+import "./styles/cart.css";
 
-function AppInner() {
-  const { favorites, setFavorites } = useApp()
-  const [q, setQ] = useState('')
-  const [results, setResults] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-
-  // Week 3: hydrate state from localStorage
-  useEffect(() => {
-    const s = loadState()
-    if (s.favorites?.length) setFavorites(s.favorites)
-  }, [setFavorites])
-
-  // Week 4: stable callback used in effect deps
-  const doSearch = useCallback(async (term) => {
-    setError('')
-    setLoading(true)
-    try {
-      const items = await searchMovies(term)
-      setResults(items)
-    } catch (e) {
-      setError('Search failed')
-    } finally {
-      setLoading(false)
-    }
-  }, [])
-
-  // Week 4: debounce search to reduce API spam
-  const debouncedQ = useMemo(() => q.trim(), [q])
-  useEffect(() => {
-    if (!debouncedQ) { setResults([]); return }
-    const id = setTimeout(() => { doSearch(debouncedQ) }, 400)
-    return () => clearTimeout(id)
-  }, [debouncedQ, doSearch])
-
-  function addFavorite(movie) {
-    if (favorites.find(f => f.id === movie.id)) return
-    const next = [movie, ...favorites]
-    setFavorites(next)
-    saveState({ ...loadState(), favorites: next })
-    logEvent('add_favorite', movie.title)
-  }
+function Shell({ children }) {
+  const { cart, theme, setTheme, themes } = useApp();
+  const [cartOpen, setCartOpen] = useState(false);
 
   return (
-    <div>
-      <Header q={q} setQ={setQ} />
-      <main className="container">
-        <p className="meta">Type to search. Press <span className="kbd">Tab</span> to move through cards.</p>
-        {loading && <p className="kbd">Loading…</p>}
-        {error && <p className="kbd" role="alert">{error}</p>}
-        <MovieList items={results} onAdd={addFavorite} />
-        <div className="footer">
-          <Events />
-          <p>StreamList • Week 1–4 combined build</p>
+    <div data-theme={theme}>
+      <header className="container">
+        <div className="row" style={{justifyContent:"space-between"}}>
+          <div className="row">
+            <Link className="brand" to="/">EZTechMovie</Link>
+            <nav className="nav">
+              <Link to="/">Home</Link>
+              <Link to="/favorites">Favorites</Link>
+              <Link to="/plans">Plans</Link>
+              <Link to="/account">Account</Link>
+            </nav>
+          </div>
+          <div className="row">
+            <select
+              aria-label="Select theme"
+              value={theme}
+              onChange={(e)=>setTheme(e.target.value)}
+            >
+              {themes.map(t => <option key={t} value={t}>{t}</option>)}
+            </select>
+            <button className="btn" onClick={() => setCartOpen(v => !v)}>
+              Cart ({cart.reduce((s,i)=>s+(i.qty||1),0)})
+            </button>
+          </div>
         </div>
-      </main>
+        <div style={{ position: "relative" }}>
+          <CartDropdown open={cartOpen} onClose={()=>setCartOpen(false)} />
+        </div>
+      </header>
+      <main className="container">{children}</main>
     </div>
-  )
+  );
 }
 
-export default function App() {
-  return <AppProvider><AppInner /></AppProvider>
+export default function App(){
+  return (
+    <Shell>
+      <Routes>
+        <Route path="/" element={<StreamList/>} />
+        <Route path="/favorites" element={<Favorites/>} />
+        <Route path="/plans" element={<Plans/>} />
+        <Route path="/account" element={<Account/>} />
+        <Route path="/movies" element={<Navigate to="/" replace/>} />
+        <Route path="*" element={<Navigate to="/" replace/>} />
+      </Routes>
+    </Shell>
+  );
 }
