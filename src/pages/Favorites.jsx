@@ -1,33 +1,57 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import { useApp } from "../state/AppContext.jsx";
 
+const posterUrl = (path, size = "w342") =>
+  path ? `https://image.tmdb.org/t/p/${size}${path}` : "/images/placeholder.png";
+
 export default function Favorites() {
-  const { favorites, poster, toggleFavorite } = useApp();
+  const { favorites = [], removeFavorite } = useApp();
+
+  if (!Array.isArray(favorites) || favorites.length === 0) {
+    return (
+      <section className="page">
+        <h1>Favorites</h1>
+        <p>No favorites yet. Use the Search page to add some.</p>
+      </section>
+    );
+  }
+
   return (
-    <div>
-      <h2>Favorites</h2>
-      {favorites.length === 0 ? <p>No favorites yet.</p> : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(180px,1fr))", gap: 12 }}>
-          {favorites.map(m => (
-            <a
-              key={m.id}
-              href={`https://www.themoviedb.org/movie/${m.id}`}
-              target="_blank"
-              rel="noreferrer"
-              style={{ textDecoration: "none", color: "inherit" }}
-              title="Open on TMDB"
-            >
-              <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 8, overflow: "hidden" }}>
-                {poster(m.poster_path) && <img src={poster(m.poster_path)} alt={m.title} style={{ width: "100%", height: 260, objectFit: "cover" }} />}
-                <div style={{ padding: 10, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <strong style={{ fontSize: 14 }}>{m.title}</strong>
-                  <button onClick={(e) => { e.preventDefault(); toggleFavorite(m); }} title="Remove favorite">✕</button>
+    <section className="page">
+      <h1>Favorites</h1>
+      <div className="grid">
+        {favorites.map((m) => {
+          const id = m.id ?? m.tmdb_id ?? m.movie_id;
+          const title = m.title ?? m.name ?? "Untitled";
+          const img = posterUrl(m.poster_path || m.poster);
+          const tmdbHref = id ? `https://www.themoviedb.org/movie/${id}` : null;
+
+          return (
+            <div className="card" key={`${id}-${title}`}>
+              {tmdbHref ? (
+                <a href={tmdbHref} target="_blank" rel="noreferrer">
+                  <img src={img} alt={title} loading="lazy" />
+                </a>
+              ) : (
+                <img src={img} alt={title} loading="lazy" />
+              )}
+              <div className="card-body">
+                <h3 className="card-title">{title}</h3>
+                <div className="row">
+                  {tmdbHref && (
+                    <a className="btn" href={tmdbHref} target="_blank" rel="noreferrer">
+                      View on TMDB
+                    </a>
+                  )}
+                  <button className="btn danger" onClick={() => removeFavorite(id)}>
+                    Remove
+                  </button>
                 </div>
               </div>
-            </a>
-          ))}
-        </div>
-      )}
-    </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }
