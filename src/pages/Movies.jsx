@@ -17,7 +17,6 @@ export default function Movies() {
     } finally { setLoading(false); }
   }
 
-  useEffect(() => { load(); /* load trending initially */ }, []);
   const onSearch = async (e) => { e.preventDefault(); await load(); };
 
   return (

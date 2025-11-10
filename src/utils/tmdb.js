@@ -22,7 +22,6 @@ export async function firstPosterForTitle(apiKey, title) {
   } catch { return ""; }
 }
 
-/** Fetch full details for a movie (overview, runtime, genres, ratings) */
 export async function getMovieDetails(apiKey, id){
   if(!apiKey || !id) return null;
   const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`;

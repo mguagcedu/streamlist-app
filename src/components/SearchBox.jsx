@@ -2,12 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { useApp } from "../state/AppContext.jsx";
 import { searchMovies } from "../services/tmdb.js";
 
-// Renders an input + suggestion list from TMDB
 export default function SearchBox({placeholder="Search movies or shows...", onPick}){
   const { tmdbKey, setTmdbKey } = useApp();
   const [q,setQ]=useState("");
   const [items,setItems]=useState([]);
-  const [showPrompt,setShowPrompt]=useState(!tmdbKey);
   const box = useRef(null);
 
   useEffect(()=>{
@@ -57,12 +55,9 @@ export default function SearchBox({placeholder="Search movies or shows...", onPi
           ))}
         </ul>
       )}
-      {showPrompt && (
-        <div className="keyprompt">
           <h4>TMDB Key Required</h4>
           <p>Paste your TMDB API key to enable search.</p>
           <input type="password" placeholder="TMDB API Key" onChange={e=>setTmdbKey(e.target.value)}/>
-          <button className="btn" onClick={()=>setShowPrompt(false)}>Save</button>
         </div>
       )}
     </div>

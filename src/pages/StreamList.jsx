@@ -65,7 +65,6 @@ export default function StreamList(){
         <button className="btn primary" type="submit">Search</button>
       </form>
 
-      {/* One-row horizontal results */}
       <div className="card-row">
         {results.map(m => (
           <article className="card" key={m.id} title={m.title}>
@@ -101,7 +100,6 @@ export default function StreamList(){
         {results.length === 0 && <div className="dim">No movies found.</div>}
       </div>
 
-      {/* My List row */}
       <h3 style={{ margin: "12px 0 4px" }}>My List</h3>
       <div className="card-row">
         {myList.length === 0 && <div className="dim">Nothing saved yet.</div>}

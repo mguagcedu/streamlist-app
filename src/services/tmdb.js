@@ -1,11 +1,9 @@
-// Accept either env var name and fall back to a saved localStorage key (if set by UI)
 let DEFAULT_API_KEY = import.meta.env.VITE_TMDB_API_KEY || import.meta.env.VITE_TMDB_KEY || '';
 if(!DEFAULT_API_KEY){
   try{ DEFAULT_API_KEY = localStorage.getItem('tmdbKey') || '' }catch(_){ DEFAULT_API_KEY = '' }
 }
 const BASE = 'https://api.themoviedb.org/3'
 
-// searchMovies(query, apiKey?) - if apiKey provided it overrides the module default.
 export async function searchMovies(query, apiKey){
   if(!query || !query.trim()) return [];
   const key = (apiKey || DEFAULT_API_KEY || "").trim();
