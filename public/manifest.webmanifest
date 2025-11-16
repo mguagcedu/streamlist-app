@@ -1,11 +1,23 @@
 {
   "name": "StreamList EZTechMovie",
   "short_name": "StreamList",
-  "description": "EZTechMovie customer app to browse, favorite and track movies.",
   "start_url": "/",
-  "scope": "/",
   "display": "standalone",
-  "background_color": "#020617",
   "theme_color": "#0ea5e9",
-  "orientation": "portrait-primary"
+  "background_color": "#020617",
+  "description": "EZTechMovie customer app to browse, favorite and track movies.",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
 }
